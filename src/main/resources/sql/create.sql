@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS courses CASCADE;
 CREATE TABLE courses (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
-    tutor_id INTEGER REFERENCES tutors(id) ON DELETE CASCADE,
+    company_id INTEGER REFERENCES companies(id) ON DELETE CASCADE,
     total_hours INTEGER NOT NULL,
     description TEXT NOT NULL,
     CONSTRAINT pos_hours CHECK (total_hours > 0)
@@ -30,7 +30,8 @@ CREATE TABLE courses (
 DROP TABLE IF EXISTS groups CASCADE;
 CREATE TABLE groups (
     id SERIAL PRIMARY KEY,
-    course_id INTEGER REFERENCES courses(id) ON DELETE CASCADE
+    course_id INTEGER REFERENCES courses(id) ON DELETE CASCADE,
+    tutor_id INTEGER REFERENCES tutors(id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS students CASCADE;
@@ -50,18 +51,11 @@ CREATE TABLE group_of_students (
     PRIMARY KEY (student_id, group_id)
 );
 
-DROP TABLE IF EXISTS class_schedule CASCADE;
-CREATE TABLE class_schedule (
-    class_number INTEGER PRIMARY KEY CHECK (class_number > 0),
-    start_time TIME NOT NULL,
-    end_time TIME NOT NULL,
-    CONSTRAINT st_gt_end CHECK (start_time < end_time)
-);
-
 DROP TABLE IF EXISTS classes CASCADE;
 CREATE TABLE classes (
     group_id INTEGER REFERENCES groups(id) ON DELETE CASCADE,
-    class_number INTEGER REFERENCES class_schedule(class_number) ON DELETE CASCADE,
-    class_date DATE NOT NULL, 
-    room_number INTEGER NOT NULL CHECK (room_number > 0)
+    class_datetime DATETIME NOT NULL, 
+    room_number INTEGER NOT NULL CHECK (room_number > 0),
+    class_duration DOUBLE PRECISION NOT NULL CHECK (class_duration > 0),
+    PRIMARY KEY (group_id, class_datetime, room_number)
 );
