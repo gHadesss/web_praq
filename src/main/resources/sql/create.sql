@@ -1,3 +1,6 @@
+\c web_praq
+SET search_path TO web_praq;
+
 DROP TABLE IF EXISTS companies CASCADE;
 CREATE TABLE companies (
     id SERIAL PRIMARY KEY,
@@ -22,7 +25,7 @@ CREATE TABLE courses (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
     company_id INTEGER REFERENCES companies(id) ON DELETE CASCADE,
-    total_hours INTEGER NOT NULL,
+    total_hours DOUBLE PRECISION NOT NULL,
     description TEXT NOT NULL,
     CONSTRAINT pos_hours CHECK (total_hours > 0)
 );
@@ -54,7 +57,7 @@ CREATE TABLE group_of_students (
 DROP TABLE IF EXISTS classes CASCADE;
 CREATE TABLE classes (
     group_id INTEGER REFERENCES groups(id) ON DELETE CASCADE,
-    class_datetime DATETIME NOT NULL, 
+    class_datetime TIMESTAMP NOT NULL, 
     room_number INTEGER NOT NULL CHECK (room_number > 0),
     class_duration DOUBLE PRECISION NOT NULL CHECK (class_duration > 0),
     PRIMARY KEY (group_id, class_datetime, room_number)
