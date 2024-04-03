@@ -1,7 +1,7 @@
 package sp.praq.models;
 
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -17,20 +17,21 @@ import java.util.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Company implements CommonEntity<Long> {
+public class Company {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "id")
-    private Long id;
+    @GeneratedValue
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    @Column(nullable = false, name = "title")
+    @Column(name = "title")
     @NonNull
     private String title;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(nullable = false, name = "address")
+    @Column(name = "address")
+    @NonNull
     private Address address;
 
-    @OneToMany(mappedBy = "courses", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Company> courses_company;
+    @OneToMany(mappedBy = "company_id", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Course> courses_company;
 }

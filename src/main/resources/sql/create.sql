@@ -1,5 +1,5 @@
 \c web_praq
-SET search_path TO web_praq;
+-- SET search_path TO web_praq;
 
 DROP TABLE IF EXISTS companies CASCADE;
 CREATE TABLE companies (
@@ -49,7 +49,7 @@ CREATE TABLE students (
 
 DROP TABLE IF EXISTS group_of_students CASCADE;
 CREATE TABLE group_of_students (
-    student_id INTEGER REFERENCES students(id) ON DELETE CASCADE,
+    student_id INTEGER REFERENCES students(id),
     group_id INTEGER REFERENCES groups(id) ON DELETE CASCADE,
     PRIMARY KEY (student_id, group_id)
 );

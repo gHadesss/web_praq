@@ -8,12 +8,9 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 public class StudentGroupId implements Serializable {
-    @NonNull
     private Student student_id;
 
-    @NonNull
     private Group group_id;
 }

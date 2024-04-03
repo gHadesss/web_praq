@@ -1,7 +1,7 @@
 package sp.praq.models;
 
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.*;
 
 @Entity
@@ -10,14 +10,13 @@ import java.util.*;
 @Setter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Group implements CommonEntity<Long> {
+public class Group {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "id")
-    private Long id;
+    @GeneratedValue
+    @Column(name = "id")
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
@@ -27,8 +26,11 @@ public class Group implements CommonEntity<Long> {
     @JoinColumn(name = "tutor_id", referencedColumnName = "id")
     private Tutor tutor_id;
 
-    @OneToMany(mappedBy = "groups_of_students", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<StudentGroup> groups_of_students;
-
     // @OneToMany classes
+
+    @OneToMany(mappedBy = "group_id", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StudentGroup> students_of_group;
+
+    @OneToMany(mappedBy = "group_id", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Lesson> classes_of_group;
 }

@@ -1,6 +1,6 @@
 package sp.praq.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 public class Lesson {
     @Id

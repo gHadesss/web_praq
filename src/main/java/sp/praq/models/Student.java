@@ -1,7 +1,8 @@
 package sp.praq.models;
 
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
+import java.util.*;
 
 
 @Entity
@@ -12,31 +13,32 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Student implements CommonEntity<Long> {
+public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "id")
-    private Long id;
+    @GeneratedValue
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    @Column(nullable = false, name = "surname")
+    @Column(name = "surname")
     @NonNull
     private String surname;
 
-    @Column(nullable = false, name = "name")
+    @Column(name = "name")
     @NonNull
     private String name;
 
-    @Column(nullable = false, name = "patronymic")
+    @Column(name = "patronymic")
     @NonNull
     private String patronymic;
 
-    @Column(nullable = false, name = "email")
+    @Column(name = "email")
     @NonNull
     private String email;
 
-    @Column(nullable = false, name = "phone_number")
+    @Column(name = "phone_number")
     @NonNull
     private String phone_number;
 
-    // OneToMany: students -> groups_of_students;
+    @OneToMany(mappedBy = "student_id", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StudentGroup> groups_of_student;
 }

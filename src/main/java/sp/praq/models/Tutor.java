@@ -1,7 +1,8 @@
 package sp.praq.models;
 
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
+import java.util.*;
 
 @Entity
 @Table(name = "tutors")
@@ -11,40 +12,40 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Tutor implements CommonEntity<Long> {
+public class Tutor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "id")
-    private Long id;
+    @GeneratedValue
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company_id;
 
-    @Column(nullable = false, name = "surname")
+    @Column(name = "surname")
     @NonNull
     private String surname;
 
-    @Column(nullable = false, name = "name")
+    @Column(name = "name")
     @NonNull
     private String name;
 
-    @Column(nullable = false, name = "patronymic")
+    @Column(name = "patronymic")
     @NonNull
     private String patronymic;
 
-    @Column(nullable = false, name = "description")
+    @Column(name = "description")
     @NonNull
     private String description;
 
-    @Column(nullable = false, name = "email")
+    @Column(name = "email")
     @NonNull
     private String email;
 
-    @Column(nullable = false, name = "phone_number")
+    @Column(name = "phone_number")
     @NonNull
     private String phone_number;
 
-//     @OneToMany(mappedBy = "tutors", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-//     private List<Group> tutors_group;
+    @OneToMany(mappedBy = "tutor_id", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Group> tutors_group;
 }

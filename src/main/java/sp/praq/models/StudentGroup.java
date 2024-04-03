@@ -1,7 +1,7 @@
 package sp.praq.models;
 
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "groups_of_students")
@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Setter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 public class StudentGroup {

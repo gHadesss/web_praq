@@ -6,10 +6,10 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class HibernateSessionFactoryUtil {
+public class HibernateUtil {
     private static SessionFactory sessionFactory;
 
-    private HibernateSessionFactoryUtil(){}
+    private HibernateUtil(){}
 
     public static SessionFactory getSessionFactory(){
         if (sessionFactory == null) {

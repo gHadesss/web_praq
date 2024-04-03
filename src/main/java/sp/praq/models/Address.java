@@ -1,5 +1,6 @@
 package sp.praq.models;
 
+import jakarta.persistence.Embeddable;
 import lombok.*;
 import java.io.Serializable;
 
@@ -8,8 +9,8 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
+@Embeddable
 public class Address implements Serializable {
     private String city;
     private String street;
