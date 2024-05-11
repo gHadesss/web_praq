@@ -9,8 +9,6 @@ import java.util.*;
 public class StudentService extends CommonService<Student, StudentDAO> {
     public StudentService() { super(new StudentDAO()); }
 
-    public List<Course> findCourses(Student student) { return dao.findCourses(student); }
-
     public List<Student> search(String surname, String name, String patronymic) {
         return dao.search(surname, name, patronymic);
     }

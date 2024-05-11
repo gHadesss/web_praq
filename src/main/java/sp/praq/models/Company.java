@@ -12,11 +12,9 @@ import java.util.*;
 @Table(name = "companies")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Company {
     @Id
     @GeneratedValue
@@ -32,6 +30,46 @@ public class Company {
     @NonNull
     private Address address;
 
-    @OneToMany(mappedBy = "company_id", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Course> courses_company;
+    @OneToMany(mappedBy = "company_id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Course> courses_company = new ArrayList<Course>();
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+
+        Company other = (Company) obj;
+
+        if (id == null) {
+            if (other.id != null) return false;
+        } else if (!id.equals(other.id)) return false;
+
+        if (title == null) {
+            if (other.title != null) return false;
+        } else if (!title.equals(other.title)) return false;
+
+        if (address == null) {
+            if (other.address != null) return false;
+        } else if (!address.equals(other.address)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int res = 1;
+
+        res = prime * res + ((id == null) ? 0 : id.hashCode());
+        res = prime * res + ((title == null) ? 0 : title.hashCode());
+        res = prime * res + ((address == null) ? 0 : address.hashCode());
+
+        return res;
+    }
+
+    @Override
+    public String toString() {
+        return "Company [id=" + id.toString() + ",title=" + title + ",tutor=" + address.toString() + "]";
+    }
 }

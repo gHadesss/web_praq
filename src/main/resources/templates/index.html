@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Тренинговый центр</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            text-align: center; /* Центрирование содержимого */
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .btn {
+            color: #fff;
+        }
+        .btn-primary {
+            background-color: #007bff; /* Цвет кнопок */
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Цвет при наведении */
+            border-color: #0056b3;
+        }
+        .spacer {
+            margin-bottom: 50px; /* Отступ между фразой и кнопками */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Страница тренингового центра</h1>
+        <p>Здесь можно посмотреть расписание занятий и иную информацию, связанную с тренинговым центром.</p>
+        <div class="row justify-content-center mb-3"></div>
+        <div class="spacer"></div>
+        <ul>
+            <li><a href="/companies" class="btn btn-primary">Компании</a></li>
+            <li><a href="/tutors" class="btn btn-primary">Преподаватели</a></li>
+            <li><a href="/courses" class="btn btn-primary">Курсы</a></li>
+            <li><a href="/students" class="btn btn-primary">Студенты</a></li>
+            <li><a href="/groups" class="btn btn-primary">Группы</a></li>
+    </ul>
+</div>
+</body>
+</html>

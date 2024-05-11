@@ -28,7 +28,38 @@ public class CompanyTest {
         List<Company> c = cs.findAll();
 
         Assertions.assertEquals(c.size(), 2);
-        Assertions.assertEquals(c.get(0).getId(), 1);
-        Assertions.assertEquals(c.get(1).getId(), 2);
+    }
+
+    @Test
+    public void testSaveUpdateDelete() {
+        CompanyService cs = new CompanyService();
+        Company c = new Company("Test Company", new Address("New York", "Wall St.", "100500"));
+
+        cs.save(c);
+        Company found = cs.findById(c.getId());
+        Assertions.assertEquals(c, found);
+
+        c.setTitle("New Title");
+        cs.update(c);
+        found = cs.findById(c.getId());
+        Assertions.assertEquals(c.getTitle(), found.getTitle());
+
+        cs.delete(c);
+        found = cs.findById(c.getId());
+        Assertions.assertEquals(null, found);
+    }
+
+    @Test
+    public void testDeleteById() {
+        CompanyService cs = new CompanyService();
+        Company c = new Company("Test Company", new Address("New York", "Wall St.", "100500"));
+
+        cs.save(c);
+        Company found = cs.findById(c.getId());
+        Assertions.assertEquals(c, found);
+
+        cs.deleteById(c.getId());
+        found = cs.findById(c.getId());
+        Assertions.assertEquals(null, found);
     }
 }

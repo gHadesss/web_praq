@@ -15,9 +15,9 @@ public class CourseDAO extends CommonDAO<Course> {
     public List<Course> listByCompany() {
         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             Transaction t = session.beginTransaction();
-            StringBuilder queryString = new StringBuilder("FROM Course");
-            queryString.append(" LEFT JOIN Course.company_id");
-            queryString.append(" ORDER BY Company.name ASC");
+            StringBuilder queryString = new StringBuilder("SELECT c FROM Course c");
+            queryString.append(" LEFT JOIN FETCH c.company_id");
+            queryString.append(" ORDER BY c.company_id.title ASC");
 
             TypedQuery<Course> query = session.createQuery(queryString.toString(), Course.class);
             List<Course> res = query.getResultList();
@@ -30,9 +30,8 @@ public class CourseDAO extends CommonDAO<Course> {
     public List<Course> listByTitle() {
         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             Transaction t = session.beginTransaction();
-            StringBuilder queryString = new StringBuilder("FROM Course");
-//            queryString.append(" LEFT JOIN Course.company_id");
-            queryString.append(" ORDER BY Course.title ASC");
+            StringBuilder queryString = new StringBuilder("SELECT c FROM Course c");
+            queryString.append(" ORDER BY c.title ASC");
 
             TypedQuery<Course> query = session.createQuery(queryString.toString(), Course.class);
             List<Course> res = query.getResultList();

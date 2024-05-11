@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Редактировать студента</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .alert-container {
+            position: fixed;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .alert-box {
+            text-align: center;
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 10px;
+            padding: 20px;
+            display: inline-block;
+            box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
+        }
+        .alert-box p {
+            margin: 0;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            color: #000000;
+        }
+        .alert-box button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .nav-buttons a {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="nav-buttons">
+    <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
+    <a href="#" onclick="history.go(-1); return false;"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+</div>
+<div class="container">
+    <h1>Редактировать студента</h1>
+    <div class="row justify-content-center mb-3"></div>
+    <form id="studentForm" th:action="@{/update_student}" method="post">
+        <div class="form-group">
+            <label for="surname">Фамилия</label>
+            <input type="text" class="form-control" id="surname" name="surname" th:value="${student.getSurname()}" required>
+        </div>
+        <div class="form-group">
+            <label for="name">Имя</label>
+            <input type="text" class="form-control" id="name" name="name" th:value="${student.getName()}" required>
+        </div>
+        <div class="form-group">
+            <label for="patronymic">Отчество</label>
+            <input type="text" class="form-control" id="patronymic" name="patronymic" th:value="${student.getPatronymic()}"required>
+        </div>
+        <div class="form-group">
+            <label for="email">Адрес эл. почты</label>
+            <input type="email" class="form-control" id="email" name="email" th:value="${student.getEmail()}" required>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Номер телефона</label>
+            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" pattern="+7[0-9]{10}|8[0-9]{10}" th:value="${student.getPhone_number()}" required>
+        </div>
+        <div class="row justify-content-center mb-3"></div>
+        <input type="hidden" name="id" th:value="${student.getId()}">
+        <button type="submit" class="btn btn-primary btn-center">Сохранить</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<div class="row justify-content-center mb-3"></div>
+</body>
+</html>
