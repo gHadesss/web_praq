@@ -25,7 +25,7 @@ public abstract class M2MCommonDAO<T> {
     }
 
     public void update(T obj) {
-        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             try {
                 session.merge(obj);
@@ -38,7 +38,7 @@ public abstract class M2MCommonDAO<T> {
     }
 
     public void delete(T obj) {
-        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             try {
                 session.remove(obj);

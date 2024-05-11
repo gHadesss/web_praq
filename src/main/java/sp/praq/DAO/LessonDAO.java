@@ -41,13 +41,16 @@ public class LessonDAO extends M2MCommonDAO<Lesson> {
     public void deleteByObj(Group group, LocalDateTime class_dt, Integer room, Double duration) {
         Lesson obj = findByObj(group, class_dt, room, duration);
         if (obj != null) {
-            try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                 Transaction t = session.beginTransaction();
-                session.remove(obj);
-                t.commit();
+                try {
+                    session.remove(obj);
+                    t.commit();
+                } catch (Exception e) {
+                    System.out.println("deleteByObj error: " + e);
+                    t.rollback();
+                }
             }
-        } else {
-            System.out.println("deleteByObj error");
         }
     }
 }

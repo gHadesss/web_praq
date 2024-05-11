@@ -14,5 +14,4 @@ public abstract class M2MCommonService<T, DAO extends M2MCommonDAO<T>> {
     public void update(T obj) { dao.update(obj); }
 
     public void delete(T obj) { dao.delete(obj); }
-
 }

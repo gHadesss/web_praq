@@ -52,16 +52,28 @@ public class LessonTest {
         Lesson found = l_s.findByObj(l.getGroup_id(), l.getClass_datetime(), l.getRoom_number(), l.getClass_duration());
         Assertions.assertEquals(l, found);
 
+        l_s.delete(l);
         l.setRoom_number(2);
         l_s.update(l);
         found = l_s.findByObj(l.getGroup_id(), l.getClass_datetime(), l.getRoom_number(), l.getClass_duration());
         Assertions.assertEquals(l, found);
-//        System.out.println(found.toString());
-//
-//        System.out.println("findbyobj is stoopid");
 
         l_s.delete(l);
         found = l_s.findByObj(l.getGroup_id(), l.getClass_datetime(), l.getRoom_number(), l.getClass_duration());
+        Assertions.assertEquals(null, found);
+    }
+
+    @Test
+    public void testDeleteByObj() {
+        LessonService l_s = new LessonService();
+        GroupService g_s = new GroupService();
+
+        LocalDateTime dt = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
+        Lesson l = new Lesson(g_s.findById(2), dt, 2, 0.5);
+
+        l_s.update(l);
+        l_s.deleteByObj(l.getGroup_id(), l.getClass_datetime(), l.getRoom_number(), l.getClass_duration());
+        Lesson found = l_s.findByObj(l.getGroup_id(), l.getClass_datetime(), l.getRoom_number(), l.getClass_duration());
         Assertions.assertEquals(null, found);
     }
 }

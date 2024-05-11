@@ -31,7 +31,6 @@ public class Group {
     private List<StudentGroup> students_of_group = new ArrayList<StudentGroup>();
 
     @OneToMany(mappedBy = "group_id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "group_id", fetch = FetchType.EAGER)
     private List<Lesson> classes_of_group = new ArrayList<Lesson>();
 
     @Override

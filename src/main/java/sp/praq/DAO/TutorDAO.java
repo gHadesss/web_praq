@@ -20,11 +20,13 @@ public class TutorDAO extends CommonDAO<Tutor> {
             StringBuilder queryString = new StringBuilder("SELECT t FROM Tutor t");
 
             if (!(surname == null && name == null && patronymic == null)) {
-                if (surname != null) queryString.append(" WHERE surname LIKE :surname");
+                queryString.append(" WHERE");
+
+                if (surname != null) queryString.append(" t.surname LIKE :surname");
 
                 if (name != null) {
-                    if (surname != null) queryString.append(" AND name LIKE :name");
-                    else queryString.append(" name LIKE :name");
+                    if (surname != null) queryString.append(" AND t.name LIKE :name");
+                    else queryString.append(" t.name LIKE :name");
                 }
 
                 if (patronymic != null) {
@@ -53,16 +55,18 @@ public class TutorDAO extends CommonDAO<Tutor> {
             StringBuilder queryString = new StringBuilder("SELECT t FROM Tutor t");
 
             if (!(surname == null && name == null && patronymic == null)) {
-                if (surname != null) queryString.append(" WHERE surname LIKE :surname");
+                queryString.append(" WHERE");
+
+                if (surname != null) queryString.append(" t.surname LIKE :surname");
 
                 if (name != null) {
-                    if (surname != null) queryString.append(" AND name LIKE :name");
-                    else queryString.append(" name LIKE :name");
+                    if (surname != null) queryString.append(" AND t.name LIKE :name");
+                    else queryString.append(" t.name LIKE :name");
                 }
 
                 if (patronymic != null) {
-                    if (surname != null || name != null) queryString.append(" AND patronymic LIKE :patronymic");
-                    else queryString.append(" patronymic LIKE :patronymic");
+                    if (surname != null || name != null) queryString.append(" AND t.patronymic LIKE :patronymic");
+                    else queryString.append(" t.patronymic LIKE :patronymic");
                 }
             }
 
@@ -81,18 +85,6 @@ public class TutorDAO extends CommonDAO<Tutor> {
     }
 
     public List<Lesson> getSchedule(Tutor tutor, LocalDateTime start, LocalDateTime end) {
-//        List<Group> g = tutor.getTutors_group();
-//        List<Lesson> res = new ArrayList<Lesson>();
-//        g.forEach(i -> res.addAll(i.getClasses_of_group()));
-//
-//        for (int i = 0; i < res.size(); i++) {
-//            LocalDateTime dt = res.get(i).getClass_datetime();
-//            if (dt.compareTo(start) < 0 || dt.compareTo(end) > 0) {
-//                res.remove(i);
-//                i--;
-//            }
-//        }
-
         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             Transaction t = session.beginTransaction();
 

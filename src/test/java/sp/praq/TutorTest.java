@@ -91,6 +91,12 @@ public class TutorTest {
 
         lt = ts.listByCompany("Иванова", null, null);
         Assertions.assertEquals(0, lt.size());
+
+        lt = ts.listByCompany(null, "Алексей", null);
+        Assertions.assertEquals(0, lt.size());
+
+        lt = ts.listByCompany(null, null, "Михайлович");
+        Assertions.assertEquals(0, lt.size());
     }
 
     @Test
@@ -105,6 +111,12 @@ public class TutorTest {
         Assertions.assertEquals(lt.get(0), ts.findById(2));
 
         lt = ts.listByName("Баширова", null, null);
+        Assertions.assertEquals(0, lt.size());
+
+        lt = ts.listByCompany(null, "Алексей", null);
+        Assertions.assertEquals(0, lt.size());
+
+        lt = ts.listByCompany(null, null, "Михайлович");
         Assertions.assertEquals(0, lt.size());
     }
 

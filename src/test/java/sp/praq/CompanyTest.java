@@ -18,7 +18,7 @@ public class CompanyTest {
         CompanyService cs = new CompanyService();
         Company c = cs.findById(1);
         Assertions.assertEquals(c.getId(), 1);
-        Assertions.assertEquals(c.getTitle(), "ООО \"Курсы\"");
+        Assertions.assertEquals(c.getTitle(), "ОАО \"Курсы\"");
         Assertions.assertEquals(c.getAddress(), new Address("г. Москва", "ул. Пушкина", "д. 9"));
     }
 

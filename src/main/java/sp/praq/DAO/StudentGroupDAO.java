@@ -28,7 +28,7 @@ public class StudentGroupDAO extends M2MCommonDAO<StudentGroup> {
             t.commit();
             return res;
         } catch (Exception e) {
-            System.out.println("findByObj error: " + e);
+//            System.out.println("findByObj error: " + e);
             t.rollback();
             return null;
         }
@@ -37,13 +37,13 @@ public class StudentGroupDAO extends M2MCommonDAO<StudentGroup> {
     public void deleteByObj(Student student, Group group) {
         StudentGroup obj = findByObj(student, group);
         if (obj != null) {
-            try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                 Transaction t = session.beginTransaction();
                 session.remove(obj);
                 t.commit();
             }
         } else {
-            System.out.println("deleteByObj error");
+//            System.out.println("deleteByObj error");
         }
     }
 }
