@@ -14,7 +14,7 @@
 
 ## Скриншоты страниц приложения
 ### Главная страница
-![Alt text](docs/pics/.png)
+![Alt text](docs/pics/index.png)
 
 ### Список компаний
 ![Alt text](docs/pics/companies.png)
@@ -85,5 +85,5 @@
 ### Страница с расписанием студента за выбранные даты на персональной странице
 ![Alt text](docs/pics/show_student_schedule.png)
 
-### Форма редактирования выбранного занятия в расписании преподавателя
-![Alt text](docs/pics/show_student_schedule.png)
+### Форма добавления занятия в расписании преподавателя
+![Alt text](docs/pics/add_lesson.png)
