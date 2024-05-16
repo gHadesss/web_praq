@@ -102,7 +102,7 @@
         <table>
             <tr>
                 <td><strong>Адрес</strong></td>
-                <td><span th:text="${company.getAddress().getCity()}"></span>, <span th:text="${company.getAddress().getStreet()}"></span>, <span th:text="${company.getAddress().getHouse()}"></span></td>
+                <td id="address"><span th:text="${company.getAddress().getCity()}"></span>, <span th:text="${company.getAddress().getStreet()}"></span>, <span th:text="${company.getAddress().getHouse()}"></span></td>
             </tr>
         </table>
     </div>
@@ -117,7 +117,7 @@
         </thead>
         <tbody>
         <th:block th:each="course : ${company.getCourses_company()}">
-            <tr>
+            <tr id="course">
                 <td>
                     <a th:href="'/course?id=' + ${course.getId()}"> <span th:text="${course.getTitle()}"></span></a>
                 </td>
