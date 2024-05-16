@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+old_build.gradle
+lib/
+docs/old*
