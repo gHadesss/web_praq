@@ -91,8 +91,9 @@
         }
         .nav-buttons {
             position: absolute;
-            top: 10px;
+            top: 60px;
             left: 10px;
+            color: #ffffff;
         }
         .nav-buttons a {
             margin-right: 10px;
@@ -101,9 +102,9 @@
 </head>
 <body>
 <div class="nav-buttons">
-    <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
-    <a href="#" onclick="history.go(-1); return false;"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+    <a href="#" onclick="history.go(-1); return false;">Вернуться назад</a>
 </div>
+<div th:replace="header_template :: page-header"></div>
 <div class="container">
     <h1>Редактировать группу <span th:text="${group.getId()}"></span></h1>
     <div class="row justify-content-center mb-3"></div>

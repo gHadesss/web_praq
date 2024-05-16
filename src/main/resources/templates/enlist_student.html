@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Создать группу</title>
+    <title>Добавить студента в группу</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -91,8 +91,9 @@
         }
         .nav-buttons {
             position: absolute;
-            top: 10px;
+            top: 60px;
             left: 10px;
+            color: #ffffff;
         }
         .nav-buttons a {
             margin-right: 10px;
@@ -101,11 +102,11 @@
 </head>
 <body>
 <div class="nav-buttons">
-    <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
-    <a href="/groups"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+    <a href="#" onclick="history.go(-1); return false;">Вернуться назад</a>
 </div>
-<div class="container">
-    <h1>Создать группу</h1>
+<div th:replace="header_template :: page-header"></div>
+<div class="container" th:unless="${students.isEmpty()}">
+    <h1>Добавить студента в группу <span th:text="${group.getId()}"></span></h1>
     <div class="row justify-content-center mb-3"></div>
     <form id="sogForm" th:action="@{/save_sog}" method="post">
         <div class="form-group">
@@ -131,6 +132,9 @@
         <p id="studentAlertMessage">Необходимо выбрать студента</p>
         <button onclick="hideStudentAlert()">Ok</button>
     </div>
+</div>
+<div class="container" th:if="${students.isEmpty()}">
+    <h1>Нельзя добавить никакого студента в группу!</h1>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

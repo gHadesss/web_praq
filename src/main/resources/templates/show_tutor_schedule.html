@@ -37,8 +37,9 @@
         }
         .nav-buttons {
             position: absolute;
-            top: 10px;
+            top: 60px;
             left: 10px;
+            color: #ffffff;
         }
         .nav-buttons a {
             margin-right: 10px;
@@ -47,9 +48,9 @@
 </head>
 <body>
 <div class="nav-buttons">
-    <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
-    <a href="#" onclick="history.go(-1); return false;"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+    <a href="#" onclick="history.go(-1); return false;">Вернуться назад</a>
 </div>
+<div th:replace="header_template :: page-header"></div>
 <h1>Расписание преподавателя: <span th:text="${tutor.getSurname()} + ' ' + ${tutor.getName()} + ' ' + ${tutor.getPatronymic()}"></span></h1>
 <div class="row justify-content-center mb-3"></div>
 <div th:unless="${lessons.isEmpty()}">
@@ -69,7 +70,7 @@
             <tr>
 <!--                <td><span th:text="${}"></span></td>-->
                 <td><span th:text="${#temporals.format(lesson.getClass_datetime(), 'dd.MM.yyyy, HH:mm')}"></span></td>
-                <td><span th:text="${#temporals.format(lesson.getClass_datetime().plusHours(lesson.getClass_duration()), 'dd.MM.yyyy, HH:mm')}"></span></td>
+                <td><span th:text="${#temporals.format(lesson.getClass_datetime().plusMinutes(lesson.getClass_duration() * 60), 'dd.MM.yyyy, HH:mm')}"></span></td>
                 <td><span th:text="${lesson.getRoom_number()}"></span></td>
                 <td>
                     <a th:href="'/group?id=' + ${lesson.getGroup_id().getId()}"><span th:text="${lesson.getGroup_id().getId()}"></span></a>
@@ -99,7 +100,13 @@
 </div>
 <div class="row justify-content-center mb-3"></div>
 <div class="text-center">
-    <button onclick="window.location.href='/add_lesson'" class="btn btn-primary">Добавить занятие</button>
+<!--    <button onclick="window.location.href='/add_lesson'" class="btn btn-primary">Добавить занятие</button>-->
+    <form th:action="@{/add_lesson}" method="get">
+        <input type="hidden" name="tutorId" th:value="${tutor.getId()}"/>
+        <input type="hidden" name="startDate" th:value="${startDate}"/>
+        <input type="hidden" name="endDate" th:value="${endDate}"/>
+        <button type="submit" class="btn btn-primary">Добавить занятие</button>
+    </form>
 </div>
 </body>
 </html>

@@ -1,4 +1,5 @@
 package sp.praq.controllers;
+import org.springframework.cglib.core.Local;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -204,7 +205,35 @@ public class Controllers {
         return "show_tutor_schedule";
     }
 
-//    @GetMapping(value = {"/add_lesson"})
+    @GetMapping(value = {"/add_lesson"})
+    public String showAddLessonPage(@RequestParam("tutorId") Integer tutorId,
+                                    @RequestParam("startDate") String startDate,
+                                    @RequestParam("endDate") String endDate, Model model) {
+        model.addAttribute("groups", g_s.findAll());
+        model.addAttribute("tutorId", tutorId);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        return "add_lesson";
+    }
+
+    @PostMapping(value = {"/save_lesson"})
+    public String saveLesson(@RequestParam("groupId") Integer groupId,
+                             @RequestParam("datetime") String datetime,
+                             @RequestParam("room") Integer room,
+                             @RequestParam("duration") Double duration,
+                             @RequestParam("tutorId") Integer tutorId,
+                             @RequestParam("startDate") String startDate,
+                             @RequestParam("endDate") String endDate, Model model) {
+        Group g = g_s.findById(groupId);
+        LocalDateTime dt = LocalDateTime.parse(datetime);
+        Lesson l = new Lesson(g, dt, room, duration);
+        l_s.update(l);
+        model.addAttribute("lessons", t_s.getSchedule(t_s.findById(tutorId), LocalDate.parse(startDate).atStartOfDay(), LocalDate.parse(endDate).atStartOfDay()));
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("tutor", t_s.findById(tutorId));
+        return "show_tutor_schedule";
+    }
 
     @PostMapping(value = {"/delete_lesson"})
     public String deleteLesson(@RequestParam("groupId") Integer groupId,
@@ -352,7 +381,9 @@ public class Controllers {
     @GetMapping(value = {"/enlist_student"})
     public String enlistStudentToGroup(@RequestParam("id") Integer id, Model model) {
         model.addAttribute("group", g_s.findById(id));
-        model.addAttribute("students", s_s.findAll());
+        List<Student> ls = s_s.findAll();
+        g_s.findById(id).getStudents_of_group().forEach(sg -> ls.remove(sg.getStudent_id()));
+        model.addAttribute("students", ls);
         return "enlist_student";
     }
 
@@ -460,5 +491,4 @@ public class Controllers {
         return "redirect:/students";
 
     }
-
 }

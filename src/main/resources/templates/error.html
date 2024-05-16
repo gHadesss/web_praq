@@ -11,9 +11,22 @@
             margin-right: 30px;
             margin-top: 20px;
         }
+        .nav-buttons {
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            color: #ffffff;
+        }
+        .nav-buttons a {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
+<div class="nav-buttons">
+    <a href="#" onclick="history.go(-1); return false;">Вернуться назад</a>
+</div>
+<div th:replace="header_template :: page-header"></div>
 <div class="indent">
     <h1>Упс, что-то пошло не так</h1>
     <span th:text="${error_msg}"> </span>

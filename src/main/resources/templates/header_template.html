@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 20px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            text-align: center; /* Центрирование содержимого */
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="page-header">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" id="root" href="/">На главную</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="companies" th:href="@{companies}">Компании</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="courses" th:href="@{courses}">Курсы</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tutors" th:href="@{tutors}">Преподаватели</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="students" th:href="@{students}">Студенты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="groups" th:href="@{groups}">Группы</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="gitHub" href="https://github.com/gHadesss/web_praq">GitHub</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--<div class="fixed-bottom">-->
+<!--    <p>-->
+<!--        Практикум 2024-->
+<!--        <br>-->
+<!--        Ермолович Егор, 328 группа-->
+<!--        <br>-->
+<!--    </p>-->
+<!--</div>-->
+<!--<div th:fragment="site-footer" class="fixed-bottom indent">-->
+<!--    <p>-->
+<!--        Страница тренингового центра-->
+<!--        <br>-->
+<!--        Ермолович Егор, 328-->
+<!--        <br>-->
+<!--    </p>-->
+<!--</div>-->
+</body>
+</html>

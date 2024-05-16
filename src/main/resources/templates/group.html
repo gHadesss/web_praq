@@ -80,8 +80,9 @@
         }
         .nav-buttons {
             position: absolute;
-            top: 10px;
+            top: 60px;
             left: 10px;
+            color: #ffffff;
         }
         .nav-buttons a {
             margin-right: 10px;
@@ -90,9 +91,9 @@
 </head>
 <body>
 <div class="nav-buttons">
-    <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
-    <a href="/groups"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+    <a href="#" onclick="history.go(-1); return false;">Вернуться назад</a>
 </div>
+<div th:replace="header_template :: page-header"></div>
 <div class="container">
     <h1>Группа <span th:text="${group.getId()}"></span></h1>
     <div class="container">
@@ -146,7 +147,7 @@
                     <form th:action="@{/expel_student}" method="post">
                         <input type="hidden" name="studentId" th:value="${student_group.getStudent_id().getId()}" />
                         <input type="hidden" name="groupId" th:value="${group.getId()}" />
-                        <button type="submit">Удалить из группы</button>
+                        <button type="submit" class="btn btn-danger">Удалить из группы</button>
                     </form>
                 </td>
             </tr>

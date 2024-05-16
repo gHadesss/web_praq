@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Создать группу</title>
+    <title>Назначить занятие</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -91,8 +91,9 @@
         }
         .nav-buttons {
             position: absolute;
-            top: 10px;
+            top: 60px;
             left: 10px;
+            color: #ffffff;
         }
         .nav-buttons a {
             margin-right: 10px;
@@ -101,53 +102,49 @@
 </head>
 <body>
 <div class="nav-buttons">
-    <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
-    <a href="/groups"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+    <a href="#" onclick="history.go(-1); return false;">Вернуться назад</a>
 </div>
+<div th:replace="header_template :: page-header"></div>
 <div class="container">
-    <h1>Создать группу</h1>
+    <h1>Назначить занятие</h1>
     <div class="row justify-content-center mb-3"></div>
-    <form id="groupForm" th:action="@{/save_group}" method="post">
+    <form id="lessonForm" th:action="@{/save_lesson}" method="post">
         <div class="form-group">
             <div class="dropdown">
-                <input type="hidden" name="courseId" id="courseInput" value="" required/>
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="courseDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Выберите курс
+                <input type="hidden" name="groupId" id="groupInput" value="" required/>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="groupDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Выберите группу
                 </button>
-                <div class="dropdown-menu" aria-labelledby="courseDropdown">
-                    <th:block th:each="course : ${courses}">
-                        <a class="dropdown-item course-item" href="#" th:text="${course.getTitle()}" th:attr="data-id=${course.getId()}"></a>
+                <div class="dropdown-menu" aria-labelledby="groupDropdown">
+                    <th:block th:each="group : ${groups}">
+                        <a class="dropdown-item group-item" href="#" th:text="${group.getId()}" th:attr="data-id=${group.getId()}"></a>
                     </th:block>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <div class="dropdown">
-                <input type="hidden" name="tutorId" id="tutorInput" value="" required/>
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="tutorDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Выберите преподавателя
-                </button>
-                <div class="dropdown-menu" aria-labelledby="courseDropdown">
-                    <th:block th:each="tutor : ${tutors}">
-                        <a class="dropdown-item tutor-item" href="#" th:text="${tutor.getSurname()} + ' ' + ${tutor.getName()} + ' ' + ${tutor.getPatronymic()}" th:attr="data-id=${tutor.getId()}"></a>
-                    </th:block>
-                </div>
-            </div>
+            <label for="datetime">Выберите дату и время</label>
+            <input type="datetime-local" class="form-control" id="datetime" name="datetime" required>
         </div>
+        <div class="form-group">
+            <label for="room">Выберите аудиторию</label>
+            <input type="number" step="1" min="1" class="form-control" id="room" name="room" required>
+        </div>
+        <div class="form-group">
+            <label for="duration">Введите продолжительность занятия в часах</label>
+            <input type="number" step="0.1" min="0.1" class="form-control" id="duration" name="duration" required>
+        </div>
+        <input type="hidden" id="tutorId" name="tutorId" th:value="${tutorId}" required>
+        <input type="hidden" id="startDate" name="startDate" th:value="${startDate}" required>
+        <input type="hidden" id="endDate" name="endDate" th:value="${endDate}" required>
         <div class="row justify-content-center mb-3"></div>
         <button type="submit" class="btn btn-primary btn-center">Сохранить</button>
     </form>
 </div>
-<div class="alert-container" id="courseAlert" style="display: none;">
+<div class="alert-container" id="groupAlert" style="display: none;">
     <div class="alert-box">
-        <p id="courseAlertMessage">Необходимо выбрать курс</p>
-        <button onclick="hideCourseAlert()">Ok</button>
-    </div>
-</div>
-<div class="alert-container" id="tutorAlert" style="display: none;">
-    <div class="alert-box">
-        <p id="tutorAlertMessage">Необходимо выбрать преподавателя</p>
-        <button onclick="hideTutorAlert()">Ok</button>
+        <p id="groupAlertMessage">Необходимо выбрать группу</p>
+        <button onclick="hideGroupAlert()">Ok</button>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -163,40 +160,24 @@
             $(this).closest('.dropdown').find('input[type="hidden"]').val(null);
         }
     });
-    $('.course-item').on('click', function() {
+    $('.group-item').on('click', function() {
         var text = $(this).text();
         var id = $(this).attr('data-id');
-        $('#courseDropdown').text(text);
-        $('#courseInput').val(id);
+        $('#groupDropdown').text(text);
+        $('#groupInput').val(id);
     });
-    $('.tutor-item').on('click', function() {
-        var text = $(this).text();
-        var id = $(this).attr('data-id');
-        $('#tutorDropdown').text(text);
-        $('#tutorInput').val(id);
-    });
-    document.getElementById('groupForm').addEventListener('submit', function(event) {
-        var courseValue = document.getElementById('courseInput').value;
-        var tutorValue = document.getElementById('tutorInput').value;
-        if (!courseValue) {
+    document.getElementById('lessonForm').addEventListener('submit', function(event) {
+        var groupValue = document.getElementById('groupInput').value;
+        if (!groupValue) {
             event.preventDefault();
-            showCourseAlert();
-        } else if (!tutorValue) {
-            event.preventDefault();
-            showTutorAlert();
+            showGroupAlert();
         }
     });
-    function showCourseAlert() {
-        document.getElementById('courseAlert').style.display = 'block';
+    function showGroupAlert() {
+        document.getElementById('groupAlert').style.display = 'block';
     }
-    function hideCourseAlert() {
-        document.getElementById('courseAlert').style.display = 'none';
-    }
-    function showTutorAlert() {
-        document.getElementById('tutorAlert').style.display = 'block';
-    }
-    function hideTutorAlert() {
-        document.getElementById('tutorAlert').style.display = 'none';
+    function hideGroupAlert() {
+        document.getElementById('groupAlert').style.display = 'none';
     }
 </script>
 <div class="row justify-content-center mb-3"></div>

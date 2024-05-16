@@ -101,8 +101,9 @@
         }
         .nav-buttons {
             position: absolute;
-            top: 10px;
+            top: 60px;
             left: 10px;
+            color: #ffffff;
         }
         .nav-buttons a {
             margin-right: 10px;
@@ -111,9 +112,9 @@
 </head>
 <body>
 <div class="nav-buttons">
-    <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
-    <a href="/tutors"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+    <a href="#" onclick="history.go(-1); return false;">Вернуться назад</a>
 </div>
+<div th:replace="header_template :: page-header"></div>
 <div class="container">
     <h1><span th:text="${tutor.getSurname()} + ' ' + ${tutor.getName()} + ' ' + ${tutor.getPatronymic()}"></span></h1>
     <div class="container">
@@ -140,8 +141,8 @@
             </tr>
         </table>
     </div>
-<!--    <div class="container">-->
-    <form id="schedForm" th:action="@{show_tutor_schedule}" method="get">
+
+    <form id="schedForm" th:action="@{/show_tutor_schedule}" method="get">
         <div class="row">
             <div class="col">
                 <label for="startDate">Дата начала расписания</label>
@@ -181,13 +182,13 @@
 </div>
 <div class="row justify-content-center">
     <div class="col-auto">
-        <form th:action="@{/edit_tutor}" method="get">
+        <form th:action="@{/edit_tutor}" method="get" class="p-0">
             <input type="hidden" name="id" th:value="${tutor.getId()}">
             <button type="submit" class="btn btn-primary">Редактировать преподавателя</button>
         </form>
     </div>
     <div class="col-auto">
-        <form th:action="@{/delete_tutor}" method="post">
+        <form th:action="@{/delete_tutor}" method="post" class="p-0">
             <input type="hidden" name="id" th:value="${tutor.getId()}">
             <button type="submit" class="btn btn-danger">Удалить преподавателя</button>
         </form>

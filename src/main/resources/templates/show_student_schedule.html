@@ -1,10 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Расписание</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            color: #ffffff;
+        }
+        .nav-buttons a {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
-
+<div class="nav-buttons">
+    <a href="#" onclick="history.go(-1); return false;">Вернуться назад</a>
+</div>
+<div th:replace="header_template :: page-header"></div>
+<h1>Расписание студента: <span th:text="${student.getSurname()} + ' ' + ${student.getName()} + ' ' + ${student.getPatronymic()}"></span></h1>
+<div class="row justify-content-center mb-3"></div>
+<div th:unless="${lessons.isEmpty()}">
+    <table>
+        <thead>
+        <tr>
+            <th>Начало занятия</th>
+            <th>Конец занятия</th>
+            <th>Аудитория</th>
+            <th>Группа</th>
+            <th>Курс</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="lesson : ${lessons}">
+            <tr>
+                <!--                <td><span th:text="${}"></span></td>-->
+                <td><span th:text="${#temporals.format(lesson.getClass_datetime(), 'dd.MM.yyyy, HH:mm')}"></span></td>
+                <td><span th:text="${#temporals.format(lesson.getClass_datetime().plusMinutes(lesson.getClass_duration() * 60), 'dd.MM.yyyy, HH:mm')}"></span></td>
+                <td><span th:text="${lesson.getRoom_number()}"></span></td>
+                <td>
+                    <a th:href="'/group?id=' + ${lesson.getGroup_id().getId()}"><span th:text="${lesson.getGroup_id().getId()}"></span></a>
+                </td>
+                <td>
+                    <a th:href="'/course?id=' + ${lesson.getGroup_id().getCourse_id().getId()}"><span th:text="${lesson.getGroup_id().getCourse_id().getTitle()}"></span></a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+<div th:if="${lessons.isEmpty()}" class="container">
+    <h2>На заданный период занятий у этого студента не назначено</h2>
+</div>
+<div class="row justify-content-center mb-3"></div>
 </body>
 </html>

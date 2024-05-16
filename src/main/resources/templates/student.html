@@ -65,6 +65,9 @@
             max-width: 80%;
             box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
         }
+        label {
+            font-weight: bold;
+        }
         .alert-box p {
             margin: 0;
             margin-bottom: 10px;
@@ -80,19 +83,38 @@
         }
         .nav-buttons {
             position: absolute;
-            top: 10px;
+            top: 60px;
             left: 10px;
+            color: #ffffff;
         }
         .nav-buttons a {
             margin-right: 10px;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-btn {
+            position: relative;
+            /*top: 32px;*/
+            left: 130px;
+            /*height: 40px;*/
+            width: 200px;
         }
     </style>
 </head>
 <body>
 <div class="nav-buttons">
-    <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
-    <a href="/students"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+    <a href="#" onclick="history.go(-1); return false;">Вернуться назад</a>
 </div>
+<div th:replace="header_template :: page-header"></div>
 <div class="container">
     <h1><span th:text="${student.getSurname()} + ' ' + ${student.getName()} + ' ' + ${student.getPatronymic()}"></span></h1>
     <div class="container">
@@ -109,7 +131,25 @@
             </tr>
         </table>
     </div>
-    <div class="row justify-content-center mb-3"></div>
+<!--</div>-->
+<!--<div class="container">-->
+    <form id="schedForm" th:action="@{show_student_schedule}" method="get">
+        <div class="row">
+            <div class="col">
+                <label for="startDate">Дата начала расписания</label>
+                <input type="date" class="form-group form-control" id="startDate" name="startDate" required>
+            </div>
+            <div class="col">
+                <label for="endDate">Дата конца расписания</label>
+                <input type="date" class="form-group form-control" id="endDate" name="endDate" required>
+            </div>
+            <input type="hidden" id="id" name="id" th:value="${student.getId()}" required>
+            <button type="submit" class="btn btn-primary form-btn justify-content-center">Получить расписание</button>
+        </div>
+    </form>
+<!--</div>-->
+<!--<div class="container">-->
+    <div class="row justify-content-center mb-5"></div>
     <h2><span th:text="'Курсы, которые слушает ' + ${student.getSurname()} + ' ' + ${student.getName()} + ' ' + ${student.getPatronymic()}"></span></h2>
     <table>
         <thead>
@@ -134,13 +174,13 @@
 </div>
 <div class="row justify-content-center">
     <div class="col-auto">
-        <form th:action="@{/edit_student}" method="get">
+        <form th:action="@{/edit_student}" method="get" class="p-0">
             <input type="hidden" name="id" th:value="${student.getId()}">
             <button type="submit" class="btn btn-primary">Редактировать студента</button>
         </form>
     </div>
     <div class="col-auto">
-        <form th:action="@{/delete_student}" method="post">
+        <form th:action="@{/delete_student}" method="post" class="p-0">
             <input type="hidden" name="id" th:value="${student.getId()}">
             <button type="submit" class="btn btn-danger">Удалить студента</button>
         </form>
