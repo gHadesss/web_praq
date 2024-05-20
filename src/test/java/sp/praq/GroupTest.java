@@ -10,28 +10,36 @@ import java.time.*;
 public class GroupTest {
     @Test
     public void testGroup() {
-        CourseService cs = new CourseService();
-        TutorService ts = new TutorService();
-        GroupService gs = new GroupService();
-        Group g = new Group(cs.findById(1), ts.findById(1));
+        try {
+            CourseService cs = new CourseService();
+            TutorService ts = new TutorService();
+            GroupService gs = new GroupService();
+            Group g = new Group(cs.findById(1), ts.findById(1));
 
-        Assertions.assertEquals(cs.findById(1), g.getCourse_id());
-        Assertions.assertEquals(ts.findById(1), g.getTutor_id());
+            Assertions.assertEquals(cs.findById(1), g.getCourse_id());
+            Assertions.assertEquals(ts.findById(1), g.getTutor_id());
+        } catch (Exception e) {
+            Assertions.assertEquals(0, 1);
+        }
     }
 
     @Test
     public void testFindById() {
-        GroupService gs = new GroupService();
-        CourseService cs = new CourseService();
-        TutorService ts = new TutorService();
+        try {
+            GroupService gs = new GroupService();
+            CourseService cs = new CourseService();
+            TutorService ts = new TutorService();
 
-        Group g = gs.findById(1);
-        Assertions.assertEquals(cs.findById(1), g.getCourse_id());
-        Assertions.assertEquals(ts.findById(2), g.getTutor_id());
+            Group g = gs.findById(1);
+            Assertions.assertEquals(cs.findById(1), g.getCourse_id());
+            Assertions.assertEquals(ts.findById(2), g.getTutor_id());
 
-        g = gs.findById(2);
-        Assertions.assertEquals(cs.findById(2), g.getCourse_id());
-        Assertions.assertEquals(ts.findById(1), g.getTutor_id());
+            g = gs.findById(2);
+            Assertions.assertEquals(cs.findById(2), g.getCourse_id());
+            Assertions.assertEquals(ts.findById(1), g.getTutor_id());
+        } catch (Exception e) {
+            Assertions.assertEquals(0, 1);
+        }
     }
 
     @Test
@@ -44,37 +52,45 @@ public class GroupTest {
 
     @Test
     public void testSaveUpdateDelete() {
-        CourseService cs = new CourseService();
-        TutorService ts = new TutorService();
-        GroupService gs = new GroupService();
-        Group g = new Group(cs.findById(1), ts.findById(1));
+        try {
+            CourseService cs = new CourseService();
+            TutorService ts = new TutorService();
+            GroupService gs = new GroupService();
+            Group g = new Group(cs.findById(1), ts.findById(1));
 
-        gs.save(g);
-        Group found = gs.findById(g.getId());
-        Assertions.assertEquals(g, found);
+            gs.save(g);
+            Group found = gs.findById(g.getId());
+            Assertions.assertEquals(g, found);
 
-        g.setCourse_id(cs.findById(2));
-        g.setTutor_id(ts.findById(2));
-        gs.update(g);
-        found = gs.findById(g.getId());
-        Assertions.assertEquals(g, found);
+            g.setCourse_id(cs.findById(2));
+            g.setTutor_id(ts.findById(2));
+            gs.update(g);
+            found = gs.findById(g.getId());
+            Assertions.assertEquals(g, found);
 
-        gs.delete(g);
-        found = gs.findById(g.getId());
-        Assertions.assertEquals(null, found);
+            gs.delete(g);
+            found = gs.findById(g.getId());
+            Assertions.assertEquals(null, found);
+        } catch (Exception e) {
+            Assertions.assertEquals("java.lang.Exception: Нет Group с таким id.", e.toString());
+        }
     }
 
     @Test
     public void testDeleteById() {
-        CourseService cs = new CourseService();
-        TutorService ts = new TutorService();
-        GroupService gs = new GroupService();
-        Group g = new Group(cs.findById(1), ts.findById(1));
-        gs.save(g);
-        Group found = gs.findById(g.getId());
-        Assertions.assertEquals(g, found);
-        gs.deleteById(g.getId());
-        found = gs.findById(g.getId());
-        Assertions.assertEquals(null, found);
+        try {
+            CourseService cs = new CourseService();
+            TutorService ts = new TutorService();
+            GroupService gs = new GroupService();
+            Group g = new Group(cs.findById(1), ts.findById(1));
+            gs.save(g);
+            Group found = gs.findById(g.getId());
+            Assertions.assertEquals(g, found);
+            gs.deleteById(g.getId());
+            found = gs.findById(g.getId());
+            Assertions.assertEquals(null, found);
+        } catch (Exception e) {
+            Assertions.assertEquals("java.lang.Exception: Нет Group с таким id.", e.toString());
+        }
     }
 }

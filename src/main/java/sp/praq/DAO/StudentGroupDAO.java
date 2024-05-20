@@ -10,7 +10,7 @@ import java.util.List;
 public class StudentGroupDAO extends M2MCommonDAO<StudentGroup> {
     public StudentGroupDAO() { super(StudentGroup.class); }
 
-    public StudentGroup findByObj(Student student, Group group) {
+    public StudentGroup findByObj(Student student, Group group) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = session.beginTransaction();
         try {
@@ -30,20 +30,47 @@ public class StudentGroupDAO extends M2MCommonDAO<StudentGroup> {
         } catch (Exception e) {
 //            System.out.println("findByObj error: " + e);
             t.rollback();
-            return null;
+            throw new Exception("Запрошенного объекта StudentGroup не существует.");
+//            return null;
         }
+
+//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//        Transaction t = session.beginTransaction();
+//        StringBuilder queryString = new StringBuilder(
+//                "SELECT sg FROM StudentGroup sg " +
+//                        "WHERE sg.student_id = :student " +
+//                        "AND sg.group_id = :group");
+//
+//        TypedQuery<StudentGroup> query = session.createQuery(queryString.toString(), StudentGroup.class);
+//
+//        query.setParameter("student", student);
+//        query.setParameter("group", group);
+//
+//        StudentGroup res = query.getSingleResult();
+//        t.commit();
+//
+//        if (res == null) throw new Exception("Запрошенного объекта StudentGroup не существует.");
+//        return res;
     }
 
-    public void deleteByObj(Student student, Group group) {
+    public void deleteByObj(Student student, Group group) throws Exception {
+//        StudentGroup obj = findByObj(student, group);
+//        if (obj != null) {
+//            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//                Transaction t = session.beginTransaction();
+//                session.remove(obj);
+//                t.commit();
+//            }
+//        } else {
+////            System.out.println("deleteByObj error");
+//        }
+
         StudentGroup obj = findByObj(student, group);
         if (obj != null) {
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                Transaction t = session.beginTransaction();
-                session.remove(obj);
-                t.commit();
-            }
-        } else {
-//            System.out.println("deleteByObj error");
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction t = session.beginTransaction();
+            session.remove(obj);
+            t.commit();
         }
     }
 }

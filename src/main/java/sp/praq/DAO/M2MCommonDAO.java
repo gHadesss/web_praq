@@ -16,37 +16,55 @@ public abstract class M2MCommonDAO<T> {
     }
 
     public List<T> findAll() {
-        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
-            Transaction transaction = session.beginTransaction();
-            List<T> resultList = session.createQuery("from " + entityClass.getSimpleName(), entityClass).getResultList();
-            transaction.commit();
-            return resultList;
-        }
+//        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+//            Transaction transaction = session.beginTransaction();
+//            List<T> resultList = session.createQuery("from " + entityClass.getSimpleName(), entityClass).getResultList();
+//            transaction.commit();
+//            return resultList;
+//        }
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        List<T> resultList = session.createQuery("from " + entityClass.getSimpleName(), entityClass).getResultList();
+        transaction.commit();
+//        session.close();
+        return resultList;
     }
 
     public void update(T obj) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            try {
-                session.merge(obj);
-                transaction.commit();
-            } catch (Exception e) {
-                System.out.println("update error: " + e);
-                transaction.rollback();
-            }
-        }
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            Transaction transaction = session.beginTransaction();
+//            try {
+//                session.merge(obj);
+//                transaction.commit();
+//            } catch (Exception e) {
+//                System.out.println("update error: " + e);
+//                transaction.rollback();
+//            }
+//        }
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        session.merge(obj);
+        transaction.commit();
+//        session.close();
     }
 
     public void delete(T obj) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            try {
-                session.remove(obj);
-                transaction.commit();
-            } catch (Exception e) {
-                System.out.println("delete error: " + e);
-                transaction.rollback();
-            }
-        }
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            Transaction transaction = session.beginTransaction();
+//            try {
+//                session.remove(obj);
+//                transaction.commit();
+//            } catch (Exception e) {
+//                System.out.println("delete error: " + e);
+//                transaction.rollback();
+//            }
+//        }
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        session.remove(obj);
+        transaction.commit();
     }
 }

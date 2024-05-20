@@ -9,7 +9,7 @@ public abstract class CommonService<T, DAO extends CommonDAO<T>> {
 
     public CommonService(DAO dao) { this.dao = dao; }
 
-    public T findById(Integer id) { return dao.findById(id); }
+    public T findById(Integer id) throws Exception { return dao.findById(id); }
 
     public List<T> findAll() { return dao.findAll(); }
 
@@ -19,5 +19,5 @@ public abstract class CommonService<T, DAO extends CommonDAO<T>> {
 
     public void delete(T obj) { dao.delete(obj); }
 
-    public void deleteById(Integer id) { dao.deleteById(id); }
+    public void deleteById(Integer id) throws Exception { dao.deleteById(id); }
 }

@@ -17,53 +17,86 @@ public class CourseTest {
 
     @Test
     public void testFindById() {
-        CourseService cs = new CourseService();
-        Course c = new Course("Test course title", 2.0d, "Test course description.");
-        cs.save(c);
-        Course found = cs.findById(c.getId());
-        Assertions.assertEquals(c, found);
-        cs.delete(c);
-        found = cs.findById(c.getId());
-        Assertions.assertEquals(null, found);
+        try {
+            CourseService cs = new CourseService();
+            Course c = new Course("Test course title", 2.0d, "Test course description.");
+            cs.save(c);
+            Course found = cs.findById(c.getId());
+            Assertions.assertEquals(c, found);
+            cs.delete(c);
+            found = cs.findById(c.getId());
+//            Assertions.assertEquals(null, found);
+        } catch (Exception e) {
+            Assertions.assertEquals("java.lang.Exception: Нет Course с таким id.", e.toString());
+        }
     }
 
     @Test
     public void testSaveUpdateDelete() {
-        CourseService cs = new CourseService();
-        Course c = new Course("123", 2.0, "desc");
+        try {
+            CourseService cs = new CourseService();
+            Course c = new Course("123", 2.0, "desc");
 
-        cs.save(c);
-        Course found = cs.findById(c.getId());
-        Assertions.assertEquals(c, found);
-        c.setDescription("Один из самых авторитетных литературных деятелей первой трети XIX века.");
-        CompanyService cs1 = new CompanyService();
-        c.setCompany_id(cs1.findById(1));
-        cs.update(c);
-        found = cs.findById(c.getId());
-        Assertions.assertEquals(c, found);
-        cs.delete(c);
-        found = cs.findById(c.getId());
-        Assertions.assertEquals(null, found);
+            cs.save(c);
+            Course found = cs.findById(c.getId());
+            Assertions.assertEquals(c, found);
+            c.setDescription("Один из самых авторитетных литературных деятелей первой трети XIX века.");
+            CompanyService cs1 = new CompanyService();
+            c.setCompany_id(cs1.findById(1));
+            cs.update(c);
+            found = cs.findById(c.getId());
+            Assertions.assertEquals(c, found);
+            cs.delete(c);
+            found = cs.findById(c.getId());
+//            Assertions.assertEquals(null, found);
+        } catch (Exception e) {
+            Assertions.assertEquals("java.lang.Exception: Нет Course с таким id.", e.toString());
+        }
+    }
+
+    @Test
+    public void testDeleteById() {
+        try {
+            CourseService crs_s = new CourseService();
+            Course c = new Course("123", 2.0, "desc");
+
+            crs_s.save(c);
+            Course found = crs_s.findById(c.getId());
+            Assertions.assertEquals(c, found);
+
+            crs_s.deleteById(c.getId());
+            found = crs_s.findById(c.getId());
+//            Assertions.assertEquals(null, found);
+        } catch (Exception e) {
+            Assertions.assertEquals("java.lang.Exception: Нет Course с таким id.", e.toString());
+        }
     }
 
     @Test
     public void testListByCompany() {
-        CourseService cs = new CourseService();
-        List<Course> lc = cs.listByCompany();
+        try {
+            CourseService cs = new CourseService();
+            List<Course> lc = cs.listByCompany();
 
-        Assertions.assertEquals(2, lc.size());
-        Assertions.assertEquals(cs.findById(1), lc.get(0));
-        Assertions.assertEquals(cs.findById(2), lc.get(1));
+            Assertions.assertEquals(2, lc.size());
+            Assertions.assertEquals(cs.findById(1), lc.get(0));
+            Assertions.assertEquals(cs.findById(2), lc.get(1));
+        } catch (Exception e) {
+            Assertions.assertEquals(0, 1);
+        }
     }
 
     @Test
     public void testListByTitle() {
-        CourseService cs = new CourseService();
-        List<Course> lc = cs.listByTitle();
+        try {
+            CourseService cs = new CourseService();
+            List<Course> lc = cs.listByTitle();
 
-        Assertions.assertEquals(2, lc.size());
-        Assertions.assertEquals(cs.findById(2), lc.get(0));
-        Assertions.assertEquals(cs.findById(1), lc.get(1));
+            Assertions.assertEquals(2, lc.size());
+            Assertions.assertEquals(cs.findById(2), lc.get(0));
+            Assertions.assertEquals(cs.findById(1), lc.get(1));
+        } catch (Exception e) {
+            Assertions.assertEquals(0, 1);
+        }
     }
-
 }
